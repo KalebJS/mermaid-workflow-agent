@@ -1,0 +1,13 @@
+[project]
+name = "whisperx-service"
+version = "0.1.0"
+description = "WhisperX transcription and diarization service"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "python-multipart>=0.0.12",
+    "whisperx>=3.1.5",
+    "torch>=2.1.0",
+    "torchaudio>=2.1.0",
+]
