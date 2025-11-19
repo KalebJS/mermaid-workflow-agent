@@ -70,11 +70,11 @@ async def transcribe_audio(
     
     try:
         # Load audio
-        audio_data = whisperx.load_audio(tmp_path)
+        audio = whisperx.load_audio(tmp_path)
         
         # Transcribe with Whisper
         model = whisperx.load_model(WHISPER_MODEL, DEVICE, compute_type=COMPUTE_TYPE)
-        result = model.transcribe(audio_data, batch_size=16)
+        result = model.transcribe(audio, batch_size=16)
         
         # Align whisper output
         model_a, metadata = whisperx.load_align_model(
@@ -85,19 +85,19 @@ async def transcribe_audio(
             result["segments"],
             model_a,
             metadata,
-            audio_data,
+            audio,
             DEVICE,
             return_char_alignments=False
         )
         
         # Diarize if enabled
-        if enable_diarization:
+        if enable_diarization and HF_TOKEN:
             diarize_model = whisperx.DiarizationPipeline(
                 use_auth_token=HF_TOKEN,
                 device=DEVICE
             )
             diarize_segments = diarize_model(
-                audio_data,
+                audio,
                 min_speakers=min_speakers,
                 max_speakers=max_speakers
             )

@@ -1,6 +1,6 @@
 fastapi==0.115.0
 hypercorn==0.17.3
 python-multipart==0.0.12
-whisperx==3.1.5
-torch==2.1.0
-torchaudio==2.1.0
+git+https://github.com/m-bain/whisperX.git
+torch
+torchaudio
