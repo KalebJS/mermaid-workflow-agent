@@ -14,8 +14,8 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.cargo/bin:$PATH"
 
 # Copy project files
-COPY whisperx_service/pyproject.toml .
-COPY whisperx_service/main.py .
+COPY pyproject.toml .
+COPY main.py .
 
 # Install dependencies with uv
 RUN uv pip install --system -r pyproject.toml
