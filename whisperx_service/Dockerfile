@@ -6,14 +6,19 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     git \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.cargo/bin:$PATH"
 
-# Copy application code
-COPY main.py .
+# Copy project files
+COPY whisperx_service/pyproject.toml .
+COPY whisperx_service/main.py .
+
+# Install dependencies with uv
+RUN uv pip install --system -r pyproject.toml
 
 # Expose port
 EXPOSE 8000
